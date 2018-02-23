@@ -1,4 +1,7 @@
-const express = require('express');
+//const express = require('express');
+
+import express from 'express';
+
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
@@ -7,14 +10,15 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
-const {dbURL} = require('./config');
+import {config} from './config';
+
 const cors = require('cors');
 const auth = require('./routes/auth');
 
 const app = express();
 
-mongoose.connect(dbURL)
-        .then(()=> console.log("Connected to DB"))
+mongoose.connect(config.dbURL)
+        .then(()=> console.log(`Connected to DB ${config.dbURL}`))
         .catch(e => console.error(e));
 
 // view engine setup

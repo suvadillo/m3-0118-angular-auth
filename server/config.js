@@ -1,4 +1,8 @@
 require('dotenv').config();
-module.exports = {
+const config = {
     dbURL: process.env.DBURL
+}
+
+export {
+    config
 }
