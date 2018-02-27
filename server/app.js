@@ -29,8 +29,8 @@ var whitelist = [
 ];
 var corsOptions = {
   origin: function(origin, callback){
-      var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
-      callback(null, originIsWhitelisted);
+    var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+    callback(null, originIsWhitelisted);
   },
   credentials: true
 };
@@ -43,7 +43,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-  secret: 'angular auth passport secret shh',
+  secret: 'trivial game secret shh',
   resave: true,
   saveUninitialized: true,
   cookie : { httpOnly: true, maxAge: 2419200000 },
