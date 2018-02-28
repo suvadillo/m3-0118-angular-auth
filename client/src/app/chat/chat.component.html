@@ -7,7 +7,27 @@
     </div>
   </div>
   <div class="sender">
-    <input type="text" [(ngModel)]="toSend" />
+    <input type="text" [(ngModel)]="msgToSend" />
     <button (click)="sendMessage()">Enviar</button>
+  </div>
+</div>
+
+<hr>
+<div>
+  <label for="">Name for the New Game</label>
+    <input type="text" [(ngModel)]="nameGame" />
+    <button (click)="getNewGame(nameGame)">Get New Game</button>
+</div>
+
+<hr>
+<div *ngIf="game">
+  <div class="game-board">
+    <h2>{{ game.name }}</h2>
+    <div class="question-block" *ngFor="let q of game.questions">
+      <h3>{{ q.question }}</h3>
+      <div class="options-block" *ngFor="let opt of q.options">
+        <input type="submit" value='{{ opt }}'>
+      </div>
+    </div>
   </div>
 </div>

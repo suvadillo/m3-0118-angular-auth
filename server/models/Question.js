@@ -7,7 +7,7 @@ const questionSchema = new Schema({
   options: [{type: String}],
   imgUrl: { type: String, default: "https://placeholdit.imgix.net/~text?txtsize=50&txt=Ironfunding&w=250&h=250" },
   correctOption: Number,
-  category: [{type: String, enum: TYPES}]
+  category: {type: String, enum: TYPES}
 }, {
   timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
 });
