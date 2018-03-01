@@ -5,6 +5,7 @@ const gameSchema = new Schema({
   name: {type: String, default: 'Trivial-Game' },
   questions: [{ type: Schema.Types.ObjectId, ref: 'Question' }],
   timeToAnswer: {type: Number, default: 15000},
+  timeToStart: {type: Number, default: 60000},
   status: {type: String, enum: ['ready', 'started', 'finished']},
   players: [{ type: Schema.Types.ObjectId, ref: 'User' }],  
   ranking: [{

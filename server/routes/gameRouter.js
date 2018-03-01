@@ -30,7 +30,6 @@ router.post("/newGame", (req, res, next) => {
       Game.findById(game._id)
           .populate('questions')
           .then ( game => {
-            console.log(game);
             res.status(200).json(game);
           })      
     });

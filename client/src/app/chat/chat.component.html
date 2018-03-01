@@ -22,7 +22,7 @@
 <hr>
 <div *ngIf="game">
   <div class="game-board">
-    <h2>{{ game.name }}</h2>
+    <h2>{{ game.name }} - {{ game._id }}</h2>
     <div class="question-block" *ngFor="let q of game.questions">
       <h3>{{ q.question }}</h3>
       <div class="options-block" *ngFor="let opt of q.options">
@@ -31,3 +31,6 @@
     </div>
   </div>
 </div>
+<hr>
+<div>game name</div>
+<div>{{ chat.gameObj.name }}</div>

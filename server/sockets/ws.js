@@ -1,5 +1,11 @@
+const express = require("express");
+const router = express.Router();
+const debug = require("debug")("server:auth");
+const User = require("../models/User");
+const Game = require("../models/Game");
+// const Question = require("../models/Question");
+
 module.exports = io => {
-  console.log("Socket io Ready");
   io.on("connection", socket => {
     console.log("a user connected");
     socket.on("chat-ready", m => {
@@ -7,20 +13,15 @@ module.exports = io => {
       socket.broadcast.emit("chat", m);
     });
 
-    // socket.on("init-game", data => {
-    //   console.log(`El juego va a empezar`);
-    //   Game.findById(data.gameId)
-    //     .populate("questions")
-    //     .then(game => {
-    //       socket.broadcast.emit("start-game", {
-    //         name: game.name,
-    //         timeRemaining: startTimeOut
-    //       });
-    //       console.log(`Starting game in ${startTimeOut} sec`);
-    //       setTimeout(() => {
-    //         sendNextQuestion(socket, game);
-    //       }, startTimeOut * 1000);
-    //     });
-    // });
+    socket.on("start-game", data => {
+      Game.findById(data.gameId)
+        .populate("questions")
+        .then(game => {
+          m = {message: 'startgame test'};
+          io.emit('start-game', game)
+          // socket.broadcast.emit('start-game', m);
+          // socket.emit('start-game', m);
+        });
+    });
   });
 };

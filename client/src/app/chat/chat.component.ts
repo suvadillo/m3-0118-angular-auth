@@ -9,6 +9,7 @@ import { ChatService } from '../../services/chat.service';
 export class ChatComponent implements OnInit {
   msgToSend: string;
   game: object;
+  gameId: any;
 
   constructor(public chat: ChatService) { }
 
@@ -21,11 +22,17 @@ export class ChatComponent implements OnInit {
     this.msgToSend = '';
   }
 
+  startGame () {
+    this.chat.startGame(this.gameId);
+  }
+
   getNewGame(n) {
     let name = '';
     n ? name = n.value : name = 'Trivial-Game';
     this.chat.getNewGame(name).subscribe( game => {
       this.game = game;
+      this.gameId = game._id;
+      this.startGame();
     });
   }
 }
