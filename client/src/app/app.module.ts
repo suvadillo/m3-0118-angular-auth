@@ -9,13 +9,15 @@ import { ChatService } from '../services/chat.service';
 import { ChatComponent } from './chat/chat.component';
 import { RouterModule } from '@angular/router';
 import { routes } from './routes';
+import { GameComponent } from './game/game.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginFormComponent,
-    ChatComponent
+    ChatComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,

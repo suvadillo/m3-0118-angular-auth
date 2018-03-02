@@ -13,14 +13,14 @@ module.exports = io => {
       socket.broadcast.emit("chat", m);
     });
 
-    socket.on("start-game", data => {
+    socket.on("get-game", data => {
       Game.findById(data.gameId)
         .populate("questions")
         .then(game => {
-          m = {message: 'startgame test'};
-          io.emit('start-game', game)
-          // socket.broadcast.emit('start-game', m);
-          // socket.emit('start-game', m);
+          m = {message: 'getgame test'};
+          io.emit('get-game', {game})
+          // socket.broadcast.emit('get-game', m);
+          // socket.emit('get-game', m);
         });
     });
   });

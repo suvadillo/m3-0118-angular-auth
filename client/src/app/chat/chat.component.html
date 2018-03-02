@@ -1,4 +1,4 @@
-<div class="chat">
+<!-- <div class="chat">
   <div class="conversations">
     <div class="mensaje" *ngFor="let m of chat.messages">
       <div [ngClass]="m.type">
@@ -16,21 +16,25 @@
 <div>
   <label for="">Name for the New Game</label>
     <input type="text" [(ngModel)]="nameGame" />
-    <button (click)="getNewGame(nameGame)">Get New Game</button>
+    <button (click)="getNewGame(nameGame)">Create New Game</button>
 </div>
 
 <hr>
-<div *ngIf="game">
+
+
+<div *ngIf="chat.gameObj.name">
   <div class="game-board">
-    <h2>{{ game.name }} - {{ game._id }}</h2>
-    <div class="question-block" *ngFor="let q of game.questions">
-      <h3>{{ q.question }}</h3>
-      <div class="options-block" *ngFor="let opt of q.options">
-        <input type="submit" value='{{ opt }}'>
-      </div>
+    <h2>{{ chat.gameObj.name }} - Created by {{ user.username }}</h2>
+    <hr>
+    <div *ngIf="chat.gameObj.name">
+
     </div>
+    <div class="question-block" *ngIf="!chat.currentQuestion">
+      <h3>Game starting in {{ chat.timer }}</h3>
+    </div>
+    <hr>
   </div>
-</div>
-<hr>
-<div>game name</div>
-<div>{{ chat.gameObj.name }}</div>
+</div> -->
+
+<button (click)="getNewGame(nameGame)">Create New Game</button>
+<button (click)='getQuestions()'>Get Question</button>

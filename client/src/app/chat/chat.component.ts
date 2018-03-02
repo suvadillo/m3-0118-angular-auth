@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
+import { SessionService } from '../../services/session.service';
+import { User, Game } from '../interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -8,13 +11,13 @@ import { ChatService } from '../../services/chat.service';
 })
 export class ChatComponent implements OnInit {
   msgToSend: string;
-  game: object;
-  gameId: any;
+  game: Game;
+  currentQuestion: object;
+  user: User;
 
-  constructor(public chat: ChatService) { }
+  constructor(public chat: ChatService, public session: SessionService, public router: Router) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   sendMessage() {
     console.log(`Enviando mensaje: ${this.msgToSend}`);
@@ -22,17 +25,28 @@ export class ChatComponent implements OnInit {
     this.msgToSend = '';
   }
 
-  startGame () {
-    this.chat.startGame(this.gameId);
-  }
-
   getNewGame(n) {
+    console.log('Creado nuevo juego desde el front');
     let name = '';
-    n ? name = n.value : name = 'Trivial-Game';
-    this.chat.getNewGame(name).subscribe( game => {
+    n ? name = n : name = 'Trivial-Game';
+    this.user = this.session.getUser();
+    this.chat.getNewGame(name, this.user._id).subscribe( game => {
       this.game = game;
-      this.gameId = game._id;
-      this.startGame();
-    });
+      this.chat.getGame(game._id);
+      console.log(`Devuelvo el objeto juego desde el componente `);
+      console.log(game);
+      });
+  }
+  getQuestions() {
+    console.log(this.game.questions[0]);
+    let counter = 1;
+    const a = setInterval(() => {
+      if (!this.game.questions[counter]) {
+        clearInterval(a);
+      } else {
+        console.log(this.game.questions[counter]);
+        counter++;
+      }
+    } , 1000);
   }
 }

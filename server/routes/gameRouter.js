@@ -7,27 +7,34 @@ const Question = require("../models/Question");
 const TYPES = require("../models/questions_types");
 
 router.post("/newGame", (req, res, next) => {
+  var x = [];
   var gameQuestionsId = [];
   const numQuestions = 2;
+  const {name, userId} = req.body;
 
   const gameQuestions = TYPES.map(element => {
     return Question.find({ category: element }).limit(numQuestions)
   });
 
-  Promise.all(gameQuestions).then(questions=>{
-    for (let i=0; i< questions.length; i++) {
-      for (let j = 0; j < numQuestions; j++) {
-        gameQuestionsId.push((questions[i][j])._id);
-      }
-    }
+  Promise.all(gameQuestions).then(questions => {
+    x = [].concat.apply([], questions)
+    gameQuestionsId = x.map(e => {return e._id});
+    
     gameQuestionsId.sort(function(a, b) {
       return 0.5 - Math.random();
     });
+    var players = [];
+    players.push(userId);
     const theGame = new Game({
-      questions: gameQuestionsId
+      questions: gameQuestionsId,
+      name: name,
+      creator: userId,
+      players: players
     });
     return theGame.save().then(game => {
       Game.findById(game._id)
+          .populate('creator')
+          .populate('players')
           .populate('questions')
           .then ( game => {
             res.status(200).json(game);
@@ -37,28 +44,19 @@ router.post("/newGame", (req, res, next) => {
   .catch(e => console.log(e));
 });
 
-//   ).then(() => {
-//     console.log("questions");
-//     console.log(gameQuestions);
-//     gameQuestions.sort(function(a, b) {
-//       return 0.5 - Math.random();
-//     });
-//     gameQuestions.forEach(g => {
-//       gameQuestionsId.push(g._id);
-//     });
-//     const theGame = new Game({
-//       name,
-//       questions: gameQuestionsId
-//     });
-//     return theGame.save().then(game => {
-//       debug(`Game ${game._id} saved with the name ${game.name}`);
-//       console.log("game:");
-//       console.log(game);
-//       res.status(200).json(game);
-//     });
-//   })
-//   .catch(e => console.log(e));
-// });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // router.get("/newGame/:category", function(req, res, next) {
 //   var category = req.params.category;
