@@ -24,7 +24,7 @@ export class GameComponent implements OnInit {
 
   getGameData(id) {
     this.chat.getGame(id);
-    this.gameSocket = this.chat.gameObj;
+    this.gameSocket = this.chat.gameSocket;
   }
 
   startGame() {

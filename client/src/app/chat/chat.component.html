@@ -1,4 +1,4 @@
-<!-- <div class="chat">
+<div class="chat">
   <div class="conversations">
     <div class="mensaje" *ngFor="let m of chat.messages">
       <div [ngClass]="m.type">
@@ -21,20 +21,25 @@
 
 <hr>
 
-
-<div *ngIf="chat.gameObj.name">
+<div *ngIf="this.chat.gameSocket">
   <div class="game-board">
-    <h2>{{ chat.gameObj.name }} - Created by {{ user.username }}</h2>
+    <h2>{{ this.chat.gameSocket.name }} - Created by {{ this.chat.gameSocket.creator.username }}</h2>
     <hr>
-    <div *ngIf="chat.gameObj.name">
-
+    <div *ngIf="creator">
+      <p>Soy el creador del juego</p>
     </div>
-    <div class="question-block" *ngIf="!chat.currentQuestion">
+    <div *ngIf="!creator">
+      <p>Join the game</p>
+    </div>
+    <!-- <div class="question-block" *ngIf="!chat.currentQuestion">
       <h3>Game starting in {{ chat.timer }}</h3>
-    </div>
+    </div> -->
     <hr>
   </div>
-</div> -->
+</div>
 
-<button (click)="getNewGame(nameGame)">Create New Game</button>
-<button (click)='getQuestions()'>Get Question</button>
+<!-- <button (click)='getQuestions()'>Get Question</button> -->
+<div *ngIf=this.chat.currentQuestion>
+
+  {{this.chat.currentQuestion | json}}
+</div>

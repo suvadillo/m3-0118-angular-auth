@@ -13,15 +13,22 @@ module.exports = io => {
       socket.broadcast.emit("chat", m);
     });
 
+    // finding game in DDBB & sending it through socket to all
     socket.on("get-game", data => {
       Game.findById(data.gameId)
-        .populate("questions")
+        .populate('questions')
+        .populate('players')
+        .populate('creator')
         .then(game => {
-          m = {message: 'getgame test'};
-          io.emit('get-game', {game})
-          // socket.broadcast.emit('get-game', m);
-          // socket.emit('get-game', m);
+          io.emit('sending-game', game)
+          //socket.broadcast.emit('sending-game', game);
+          //socket.emit('sending-game', game);
         });
+    });
+
+    // getting & resending next question to all users
+    socket.on("send-question", question => {
+      io.emit("resend-question", question);
     });
   });
 };

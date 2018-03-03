@@ -12,22 +12,12 @@ export class ChatService {
   public messages: Array<Message> = [];
   public notifications: Array<Notification> = [];
   socket: any;
-  public gameObj: Game = {
-    creator: '',
-    name: '',
-    questions: [''],
-    timeToAnswer: 0,
-    timeToStart: 0,
-    status: '',
-    players: [],
-    ranking: []
-  };
-  public currentQuestion: Array<any> = [''];
+  public gameSocket: any;
   public counter: number;
+  public currentQuestion: any;
   public timer: number;
 
   constructor(private http: Http, ) {
-
     this.socket = io(`${this.BASE_URL}`);
     this.socket.on('connect', () => console.log('Connected to WS'));
     this.socket.on('chat', m => {
@@ -37,13 +27,33 @@ export class ChatService {
         type: 'other'
       });
     });
-    this.socket.on('start-game', game => {
-      this.gameObj = game;
+    this.socket.on('sending-game', game => {
+      this.gameSocket = game;
+      this.getQuestions();
+    });
+    this.socket.on('resend-question', question => {
+      this.currentQuestion = question;
     });
 
   }
+  getQuestions() {
+    console.log(this.gameSocket.questions[0])
+    this.currentQuestion = this.gameSocket.questions[0]
+    let counter = 1;
+    const a = setInterval(() => {
+      if (!this.gameSocket.questions[counter]) {
+        clearInterval(a);
+      } else {
+        setTimeout(() => {
+          console.log('this.currentQuestion: ');
+          console.log(this.gameSocket.questions[counter]);
+          this.currentQuestion = this.gameSocket.questions[counter];
 
-
+          counter++;
+        }, 500);
+      }
+    } , 1000);
+  }
   sendMessage(m: string) {
     this.socket.emit('chat-ready', {
       status: 'Mensaje recibido',
@@ -55,6 +65,7 @@ export class ChatService {
     });
   }
 
+  // sending gameId of created game to socket in back
   getGame(data: string) {
     this.socket.emit('get-game', {
       status: 'Game sent',
@@ -62,6 +73,14 @@ export class ChatService {
     });
   }
 
+  sendQuestion(question: object) {
+    this.socket.emit('send-question', {
+      status: 'Question sent',
+      currentQ: question
+    });
+  }
+
+  // creating new game in DDBB
   getNewGame(name, userId) {
     return this.http.post(`${this.BASE_URL}/api/game/newGame`, {name, userId}, this.options)
       .map((res) => res.json());

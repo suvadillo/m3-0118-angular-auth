@@ -12,8 +12,9 @@ import { Router } from '@angular/router';
 export class ChatComponent implements OnInit {
   msgToSend: string;
   game: Game;
-  currentQuestion: object;
+  currentQuestion: any;
   user: User;
+  creator: boolean = false;
 
   constructor(public chat: ChatService, public session: SessionService, public router: Router) { }
 
@@ -33,19 +34,25 @@ export class ChatComponent implements OnInit {
     this.chat.getNewGame(name, this.user._id).subscribe( game => {
       this.game = game;
       this.chat.getGame(game._id);
-      console.log(`Devuelvo el objeto juego desde el componente `);
-      console.log(game);
+      setTimeout(() => {
+        if (this.chat.gameSocket.creator._id === this.user._id) {
+          this.creator = true;
+        }
+      }, 500);
       });
   }
   getQuestions() {
-    console.log(this.game.questions[0]);
-    let counter = 1;
+    let counter = 0;
     const a = setInterval(() => {
-      if (!this.game.questions[counter]) {
+      if (!this.chat.gameSocket.questions[counter]) {
         clearInterval(a);
       } else {
-        console.log(this.game.questions[counter]);
-        counter++;
+        this.chat.sendQuestion(this.chat.gameSocket.questions[counter]);
+        setTimeout(() => {
+          console.log('this.chat.currentQuestion: ');
+          console.log(this.chat.currentQuestion.currentQ);
+          counter++;
+        }, 500);
       }
     } , 1000);
   }
