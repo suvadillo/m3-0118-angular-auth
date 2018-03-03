@@ -41,19 +41,19 @@ export class ChatComponent implements OnInit {
       }, 500);
       });
   }
-  getQuestions() {
-    let counter = 0;
-    const a = setInterval(() => {
-      if (!this.chat.gameSocket.questions[counter]) {
-        clearInterval(a);
-      } else {
-        this.chat.sendQuestion(this.chat.gameSocket.questions[counter]);
-        setTimeout(() => {
-          console.log('this.chat.currentQuestion: ');
-          console.log(this.chat.currentQuestion.currentQ);
-          counter++;
-        }, 500);
-      }
-    } , 1000);
-  }
+  // getQuestions() {
+  //   let counter = 0;
+  //   const a = setInterval(() => {
+  //     if (!this.chat.gameSocket.questions[counter]) {
+  //       clearInterval(a);
+  //     } else {
+  //       this.chat.sendQuestion(this.chat.gameSocket.questions[counter]);
+  //       setTimeout(() => {
+  //         console.log('this.chat.currentQuestion: ');
+  //         console.log(this.chat.currentQuestion.currentQ);
+  //         counter++;
+  //       }, 500);
+  //     }
+  //   } , 1000);
+  // }
 }

@@ -38,7 +38,7 @@
   </div>
 </div>
 
-<!-- <button (click)='getQuestions()'>Get Question</button> -->
+<button (click)='this.chat.sendQuestion("started")'>Get Question</button>
 <div *ngIf=this.chat.currentQuestion>
 
   {{this.chat.currentQuestion | json}}

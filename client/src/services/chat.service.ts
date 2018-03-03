@@ -15,6 +15,7 @@ export class ChatService {
   public gameSocket: any;
   public counter: number;
   public currentQuestion: any;
+  public note: any;
   public timer: number;
 
   constructor(private http: Http, ) {
@@ -29,10 +30,13 @@ export class ChatService {
     });
     this.socket.on('sending-game', game => {
       this.gameSocket = game;
-      this.getQuestions();
+      // this.getQuestions();
     });
-    this.socket.on('resend-question', question => {
-      this.currentQuestion = question;
+    // receiving socket-back message to trigger questions
+    this.socket.on('resend-question', gameStatus => {
+      this.gameSocket.status = gameStatus.status;
+      console.log(this.gameSocket.status);
+      this.getQuestions();
     });
 
   }
@@ -46,7 +50,8 @@ export class ChatService {
       } else {
         setTimeout(() => {
           console.log('this.currentQuestion: ');
-          console.log(this.gameSocket.questions[counter]);
+          console.log(this.currentQuestion);
+          // console.log(this.gameSocket.questions[counter]);
           this.currentQuestion = this.gameSocket.questions[counter];
 
           counter++;
@@ -73,10 +78,10 @@ export class ChatService {
     });
   }
 
-  sendQuestion(question: object) {
+  // sending message to socket-back to trigger questions
+  sendQuestion(gameStatus: string) {
     this.socket.emit('send-question', {
-      status: 'Question sent',
-      currentQ: question
+      status: gameStatus
     });
   }
 

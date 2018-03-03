@@ -27,8 +27,8 @@ module.exports = io => {
     });
 
     // getting & resending next question to all users
-    socket.on("send-question", question => {
-      io.emit("resend-question", question);
+    socket.on("send-question", gameStatus => {
+      io.emit("resend-question", gameStatus);
     });
   });
 };

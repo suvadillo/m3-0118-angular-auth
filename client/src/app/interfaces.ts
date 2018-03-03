@@ -25,3 +25,12 @@ export interface Game {
   ranking: Array<any>;
 }
 
+export interface Question {
+  question: string;
+  options: Array<any>;
+  imgUrl: string;
+  correctOption: number;
+  category: string;
+  dificulty: string;
+}
+
