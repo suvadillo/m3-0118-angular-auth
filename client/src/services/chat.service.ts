@@ -17,6 +17,9 @@ export class ChatService {
   public currentQuestion: any;
   public note: any;
   public timer: number;
+  public statusOption: string = 'unselected';
+  public yourAnswers: Array<any> = [];
+  public yourRecord: number;
 
   constructor(private http: Http, ) {
     this.socket = io(`${this.BASE_URL}`);
@@ -36,28 +39,26 @@ export class ChatService {
     this.socket.on('resend-question', gameStatus => {
       this.gameSocket.status = gameStatus.status;
       console.log(this.gameSocket.status);
+      this.yourRecord = 0;
       this.getQuestions();
     });
 
   }
   getQuestions() {
-    console.log(this.gameSocket.questions[0])
-    this.currentQuestion = this.gameSocket.questions[0]
+    this.currentQuestion = this.gameSocket.questions[0];
     let counter = 1;
     const a = setInterval(() => {
       if (!this.gameSocket.questions[counter]) {
         clearInterval(a);
       } else {
         setTimeout(() => {
-          console.log('this.currentQuestion: ');
-          console.log(this.currentQuestion);
-          // console.log(this.gameSocket.questions[counter]);
+          if (this.yourAnswers.length < counter) { this.yourAnswers.push('x'); }
           this.currentQuestion = this.gameSocket.questions[counter];
-
+          this.statusOption = 'unselected';
           counter++;
         }, 500);
       }
-    } , 1000);
+    } , 5000);
   }
   sendMessage(m: string) {
     this.socket.emit('chat-ready', {

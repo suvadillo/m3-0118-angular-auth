@@ -15,6 +15,8 @@ export class ChatComponent implements OnInit {
   currentQuestion: any;
   user: User;
   creator: boolean = false;
+  // record: Array<any> = [];
+  // statusOption: string;
 
   constructor(public chat: ChatService, public session: SessionService, public router: Router) { }
 
@@ -40,6 +42,20 @@ export class ChatComponent implements OnInit {
         }
       }, 500);
       });
+  }
+
+  recordAnswer(i, correctOption) {
+    if (this.chat.statusOption === 'unselected') {
+      this.chat.yourAnswers.push(i);
+      if (i === correctOption) { this.chat.yourRecord++; }
+    }
+    this.chat.statusOption = 'selected';
+
+    console.log('i: ' + i + ' / correct: ' + correctOption);
+    console.log('yourAnswers:');
+    console.log(this.chat.yourAnswers);
+    console.log('yourRecord:');
+    console.log(this.chat.yourRecord);
   }
   // getQuestions() {
   //   let counter = 0;
