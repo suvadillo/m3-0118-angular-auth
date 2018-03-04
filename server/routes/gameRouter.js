@@ -47,22 +47,14 @@ router.post("/newGame", (req, res, next) => {
 router.post('/:id', (req,res, next) => {
   const {user,userScore} = req.body;
   const newRanking = {user: user, score: userScore};
-  console.log('req.params.id')
-  console.log(req.params.id)
-  console.log('req.user._id');
-  console.log(req.user._id);
-  console.log(newRanking);
 
   Game.findById(req.params.id)
+    .populate('creator')
     .exec((err, game) => {
       if (err) { return res.status(500).json(err); }
       if (!game) { return res.status(404).json(err); }
-      console.log(game);
 
       game.ranking.push(newRanking);
-      console.log('game.ranking')
-      console.log(game.ranking);
-      console.log(game.ranking.user);
       game.status = 'finished';
 
       game.save( (err) => {

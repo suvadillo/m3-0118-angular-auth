@@ -22,11 +22,12 @@ export class ChatService {
   public userAnswers: Array<any> = [];
   public userRecord: number;
   public user: User;
+  public gameFinished: boolean;
+  public gameRanking: Array<any>;
 
   constructor(private http: Http, public session: SessionService) {
     // this.user = this.session.getUser();
-    console.log('this.user');
-    console.log(this.user);
+    this.gameFinished = false;
     this.socket = io(`${this.BASE_URL}`);
     this.socket.on('connect', () => console.log('Connected to WS'));
     this.socket.on('chat', m => {
@@ -48,7 +49,11 @@ export class ChatService {
     });
 
     this.socket.on('ranking-game', data => {
-      console.log(data);
+      this.gameSocket = data.gameData;
+      this.drawRanking();
+      this.note = data.status;
+      this.currentQuestion = '';
+      this.gameFinished = true;
     });
   }
 
@@ -105,11 +110,6 @@ export class ChatService {
 
   // sending data to socket-back to end the game
   getRankingGame() {
-    // const data = {
-    //   gameId: this.gameSocket._id,
-    //   userId: this.user.username,
-    //   userScore: this.userRecord
-    // };
     const username = this.session.getUser().username;
     console.log('username in getRankingGame:')
     console.log(username)
@@ -124,6 +124,11 @@ export class ChatService {
   updateFinishedGame(gameId, user, userScore) {
     return this.http.post(`${this.BASE_URL}/api/game/${gameId}`, {user, userScore}, this.options)
       .map((res) => res.json());
+  }
+
+  drawRanking() {
+    this.gameRanking = this.gameSocket.ranking;
+    this.gameRanking.sort((a, b) => (a.score < b.score) ? 1 : ((b.score < a.score) ? -1 : 0));
   }
 
 }
