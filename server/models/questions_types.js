@@ -1,6 +1,18 @@
 module.exports = [
-  "captain america",
-  "daredevil",
-  "thor",
-  "signUp"
+  "HTML",
+  "CSS",
+  "JavaScript",
+  "Bootstrap",
+  "jQuery"
 ];
+
+
+
+
+
+// module.exports = [
+//   "captain america",
+//   "daredevil",
+//   "thor",
+//   "signUp"
+// ];

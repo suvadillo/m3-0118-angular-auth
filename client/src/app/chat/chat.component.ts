@@ -34,8 +34,8 @@ export class ChatComponent implements OnInit {
     n ? name = n : name = 'Trivial-Game';
     this.user = this.session.getUser();
     this.chat.user = this.user;
-    console.log('this.user.chat')
-    console.log(this.chat.user)
+    console.log('this.user.chat');
+    console.log(this.chat.user);
     this.chat.getNewGame(name, this.user._id).subscribe( game => {
       this.game = game;
       this.chat.getGame(game._id);

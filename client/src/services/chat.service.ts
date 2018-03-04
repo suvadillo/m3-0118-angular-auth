@@ -111,8 +111,8 @@ export class ChatService {
   // sending data to socket-back to end the game
   getRankingGame() {
     const username = this.session.getUser().username;
-    console.log('username in getRankingGame:')
-    console.log(username)
+    console.log('username in getRankingGame:');
+    console.log(username);
     this.updateFinishedGame(this.gameSocket._id, username, this.userRecord).subscribe( game => {
       this.socket.emit('end-game', {
         status: 'Game finished',
@@ -128,7 +128,7 @@ export class ChatService {
 
   drawRanking() {
     this.gameRanking = this.gameSocket.ranking;
-    this.gameRanking.sort((a, b) => (a.score < b.score) ? 1 : ((b.score < a.score) ? -1 : 0));
+    this.gameRanking.sort((a, b) => (a.score <= b.score) ? 1 : ((b.score < a.score) ? -1 : 0));
   }
 
 }
