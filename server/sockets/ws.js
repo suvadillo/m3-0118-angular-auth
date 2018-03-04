@@ -30,5 +30,10 @@ module.exports = io => {
     socket.on("send-question", gameStatus => {
       io.emit("resend-question", gameStatus);
     });
+
+    // getting & resending result of the game to all users
+    socket.on("end-game", data => {
+      io.emit("ranking-game", data);
+    });
   });
 };

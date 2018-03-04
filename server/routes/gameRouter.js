@@ -44,6 +44,35 @@ router.post("/newGame", (req, res, next) => {
   .catch(e => console.log(e));
 });
 
+router.post('/:id', (req,res, next) => {
+  const {user,userScore} = req.body;
+  const newRanking = {user: user, score: userScore};
+  console.log('req.params.id')
+  console.log(req.params.id)
+  console.log('req.user._id');
+  console.log(req.user._id);
+  console.log(newRanking);
+
+  Game.findById(req.params.id)
+    .exec((err, game) => {
+      if (err) { return res.status(500).json(err); }
+      if (!game) { return res.status(404).json(err); }
+      console.log(game);
+
+      game.ranking.push(newRanking);
+      console.log('game.ranking')
+      console.log(game.ranking);
+      console.log(game.ranking.user);
+      game.status = 'finished';
+
+      game.save( (err) => {
+        if (err) { return res.status(500).json(err); }
+        if (game.errors){ return res.status(400).json(game); }
+
+        return res.status(200).json(game);
+      });
+  });
+})
 
 
 
@@ -55,25 +84,6 @@ router.post("/newGame", (req, res, next) => {
 
 
 
-
-
-
-// router.get("/newGame/:category", function(req, res, next) {
-//   var category = req.params.category;
-//   var arrOptions = ["Question1", "Question2", "Question3"];
-//   superhero = superhero0.replace("_", " ");
-//   // superhero = superhero.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); })
-//   Question.find({ category: superhero }).exec((err, quizes) => {
-//     quizes.sort(function(a, b) {
-//       return 0.5 - Math.random();
-//     });
-//     res.render("quizSuperhero", {
-//       quizes: quizes,
-//       arrOptions: arrOptions,
-//       superhero: superhero0
-//     });
-//   });
-// });
 
 // router.post("/quizSuperhero", function(req, res, next) {
 //   const option1 = req.body.Question1;

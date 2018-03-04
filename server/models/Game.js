@@ -10,7 +10,7 @@ const gameSchema = new Schema({
   creator: { type: Schema.Types.ObjectId, ref: 'User' },
   players: [{ type: Schema.Types.ObjectId, ref: 'User' }],  
   ranking: [{
-    user: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    user: String,
     score: Number
   }]
 }, {

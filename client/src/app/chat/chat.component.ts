@@ -20,7 +20,7 @@ export class ChatComponent implements OnInit {
 
   constructor(public chat: ChatService, public session: SessionService, public router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {  }
 
   sendMessage() {
     console.log(`Enviando mensaje: ${this.msgToSend}`);
@@ -33,6 +33,9 @@ export class ChatComponent implements OnInit {
     let name = '';
     n ? name = n : name = 'Trivial-Game';
     this.user = this.session.getUser();
+    this.chat.user = this.user;
+    console.log('this.user.chat')
+    console.log(this.chat.user)
     this.chat.getNewGame(name, this.user._id).subscribe( game => {
       this.game = game;
       this.chat.getGame(game._id);
@@ -46,16 +49,16 @@ export class ChatComponent implements OnInit {
 
   recordAnswer(i, correctOption) {
     if (this.chat.statusOption === 'unselected') {
-      this.chat.yourAnswers.push(i);
-      if (i === correctOption) { this.chat.yourRecord++; }
+      this.chat.userAnswers.push(i);
+      if (i === correctOption) { this.chat.userRecord++; }
     }
     this.chat.statusOption = 'selected';
 
     console.log('i: ' + i + ' / correct: ' + correctOption);
-    console.log('yourAnswers:');
-    console.log(this.chat.yourAnswers);
-    console.log('yourRecord:');
-    console.log(this.chat.yourRecord);
+    console.log('userAnswers:');
+    console.log(this.chat.userAnswers);
+    console.log('userRecord:');
+    console.log(this.chat.userRecord);
   }
   // getQuestions() {
   //   let counter = 0;

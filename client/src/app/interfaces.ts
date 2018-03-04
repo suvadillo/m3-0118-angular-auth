@@ -1,7 +1,7 @@
 export interface User {
   username: string;
   password: string;
-  _id: any;
+  _id: number;
 }
 
 export interface Message {
@@ -15,6 +15,7 @@ export interface Notification {
 }
 
 export interface Game {
+  _id: number;
   name: string;
   creator: any;
   questions: Array<any>;
@@ -26,6 +27,7 @@ export interface Game {
 }
 
 export interface Question {
+  _id: number;
   question: string;
   options: Array<any>;
   imgUrl: string;
