@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { Game, User } from '../interfaces';
 import { SessionService } from '../../services/session.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-games-home',
@@ -11,11 +12,21 @@ import { SessionService } from '../../services/session.service';
 export class GamesHomeComponent implements OnInit {
   games: Array<Game>;
   user: User;
+  admin: boolean;
+  // game: Game;
 
-  constructor(public chat: ChatService, public session: SessionService) { }
+  constructor(public chat: ChatService, public session: SessionService, public router: Router) {
+  }
 
   ngOnInit() {
     this.getGames();
+    this.session.userReady.subscribe( u => {
+      this.user = u;
+      if (u.username === 'goiko') {
+        this.admin = true;
+      }
+      return this.user = u;
+    });
   }
 
   getGames() {
@@ -30,4 +41,23 @@ export class GamesHomeComponent implements OnInit {
     this.chat.joinGame(gameId, this.user);
   }
 
+  getNewGame(n, num) {
+    let name = '';
+    let numQuesCat = 0;
+    n ? name = n : name = 'Trivial-Coding-Game';
+    num ? numQuesCat = num : numQuesCat = 2;
+    // console.log('this.user.chat');
+    // console.log(this.chat.user);
+    this.chat.getNewGame(name, this.user._id, numQuesCat).subscribe( game => {
+      // this.game = game;
+      this.chat.getGame(game._id);
+      setTimeout(() => {
+        if (this.chat.gameSocket.creator._id === this.user._id) {
+          this.chat.creator = true;
+        }
+      }, 500);
+      this.getGames();
+      this.router.navigate(['/chat']);
+      });
+  }
 }

@@ -5,16 +5,16 @@ const User = require("../models/User");
 const Game = require("../models/Game");
 const Question = require("../models/Question");
 const TYPES = require("../models/questions_types");
+var _ = require('lodash');
 
 router.get('/', (req, res, next) => {
   Game
-    .find({})
+    .find({status: 'ready'})
     .populate('creator')
     .populate('players')
     .populate('questions')
     .exec( (err, games) => {
       if (err) { return res.status(500).json(err); }
-
       return res.status(200).json(games);
     });
 });
@@ -25,9 +25,8 @@ router.get('/', (req, res, next) => {
 router.post("/newGame", (req, res, next) => {
   var x = [];
   var gameQuestionsId = [];
-  const numQuestions = 2;
-  const {name, userId} = req.body;
-
+  const {name, userId, numQ} = req.body;
+  const numQuestions = numQ;
   const gameQuestions = TYPES.map(element => {
     return Question.find({ category: element }).limit(numQuestions)
   });
@@ -66,12 +65,39 @@ router.post('/:id', (req,res, next) => {
 
   Game.findById(req.params.id)
     .populate('creator')
+    .populate('players')
+    .populate('questions')
     .exec((err, game) => {
       if (err) { return res.status(500).json(err); }
       if (!game) { return res.status(404).json(err); }
 
       game.ranking.push(newRanking);
       game.status = 'finished';
+
+      game.save( (err) => {
+        if (err) { return res.status(500).json(err); }
+        if (game.errors){ return res.status(400).json(game); }
+
+        return res.status(200).json(game);
+      });
+  });
+})
+
+router.put('/:id', (req,res, next) => {
+  const {gameStatus, player} = req.body;
+  console.log('player');
+  console.log(player);
+
+  Game.findById(req.params.id)
+    .populate('creator')
+    .populate('players')
+    .populate('questions')
+    .exec((err, game) => {
+      if (err) { return res.status(500).json(err); }
+      if (!game) { return res.status(404).json(err); }
+
+      if(gameStatus) game.status = gameStatus;
+      if(player) game.players.push(player); 
 
       game.save( (err) => {
         if (err) { return res.status(500).json(err); }

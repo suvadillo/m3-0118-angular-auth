@@ -25,9 +25,12 @@ export class ChatService {
   public user: User;
   public gameFinished: boolean;
   public gameRanking: Array<any>;
+  public creator:boolean = false;
 
   constructor(private http: Http, public session: SessionService, public router: Router) {
-    // this.user = this.session.getUser();
+    this.session.userReady.subscribe( u => {
+      return this.user = u;
+    });
     this.gameFinished = false;
     this.socket = io(`${this.BASE_URL}`);
     this.socket.on('connect', () => console.log('Connected to WS'));
@@ -97,27 +100,33 @@ export class ChatService {
   }
 
   joinGame(gameId, player) {
-    // this.socket.emit('join-game', {
-    //   game: gameId,
-    //   player: player
-    // });
-    this.socket.emit('get-game', {
-      status: 'Game sent',
-      gameId: gameId
+    console.log('player en service');
+    console.log(player);
+    this.updateGame(gameId, 0, player._id).subscribe( game => {
+      this.gameSocket = game;
+      this.socket.emit('get-game', {
+        status: 'Game sent',
+        gameId: gameId
+      });
+      this.router.navigate(['/chat']);
+      console.log(this.gameSocket);
     });
-    this.router.navigate(['/chat']);
   }
 
   // sending message to socket-back to trigger questions
+  // update status game to 'started'
   sendQuestion(gameStatus: string) {
+    this.updateGame(this.gameSocket._id, gameStatus, 0).subscribe( game => {
+      this.gameSocket = game;
+    });
     this.socket.emit('send-question', {
       status: gameStatus
     });
   }
 
   // creating new game in DDBB
-  getNewGame(name, userId) {
-    return this.http.post(`${this.BASE_URL}/api/game/newGame`, {name, userId}, this.options)
+  getNewGame(name, userId, numQ) {
+    return this.http.post(`${this.BASE_URL}/api/game/newGame`, {name, userId, numQ}, this.options)
       .map((res) => res.json());
   }
 
@@ -132,6 +141,11 @@ export class ChatService {
         gameData: game
       });
     });
+  }
+
+  updateGame(gameId, gameStatus, player) {
+    return this.http.put(`${this.BASE_URL}/api/game/${gameId}`, {gameStatus, player}, this.options)
+      .map((res) => res.json());
   }
 
   updateFinishedGame(gameId, user, userScore) {

@@ -20,7 +20,11 @@ export class ChatComponent implements OnInit {
 
   constructor(public chat: ChatService, public session: SessionService, public router: Router) { }
 
-  ngOnInit() {  }
+  ngOnInit() {
+    this.session.userReady.subscribe( u => {
+      return this.user = u;
+    });
+  }
 
   sendMessage() {
     console.log(`Enviando mensaje: ${this.msgToSend}`);
@@ -28,24 +32,25 @@ export class ChatComponent implements OnInit {
     this.msgToSend = '';
   }
 
-  getNewGame(n) {
-    console.log('Creado nuevo juego desde el front');
-    let name = '';
-    n ? name = n : name = 'Trivial-Game';
-    this.user = this.session.getUser();
-    this.chat.user = this.user;
-    console.log('this.user.chat');
-    console.log(this.chat.user);
-    this.chat.getNewGame(name, this.user._id).subscribe( game => {
-      this.game = game;
-      this.chat.getGame(game._id);
-      setTimeout(() => {
-        if (this.chat.gameSocket.creator._id === this.user._id) {
-          this.creator = true;
-        }
-      }, 500);
-      });
-  }
+  // getNewGame(n, num) {
+  //   let name = '';
+  //   let numQuesCat = 0;
+  //   n ? name = n : name = 'Trivial-Coding-Game';
+  //   num ? numQuesCat = num : numQuesCat = 2;
+  //   this.user = this.session.getUser();
+  //   this.chat.user = this.user;
+  //   // console.log('this.user.chat');
+  //   // console.log(this.chat.user);
+  //   this.chat.getNewGame(name, this.user._id, numQuesCat).subscribe( game => {
+  //     this.game = game;
+  //     this.chat.getGame(game._id);
+  //     setTimeout(() => {
+  //       if (this.chat.gameSocket.creator._id === this.user._id) {
+  //         this.creator = true;
+  //       }
+  //     }, 500);
+  //     });
+  // }
 
   recordAnswer(i, correctOption) {
     if (this.chat.statusOption === 'unselected') {

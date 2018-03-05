@@ -21,7 +21,7 @@ export class LoginFormComponent implements OnInit {
     this.session.login(this.username, this.password)
     .catch(e => this.error = e)
     .subscribe(user => {
-      this.router.navigate(['/chat']);
+      this.router.navigate(['/gameshome']);
       // console.log(`Welcome ${user.username}`);
     });
   }
@@ -30,7 +30,7 @@ export class LoginFormComponent implements OnInit {
     this.session.signup(this.username, this.password)
     .catch(e => this.error = e)
     .subscribe(user => {
-      this.router.navigate(['/chat']);
+      this.router.navigate(['/gameshome']);
       // console.log(`Welcome ${user.username}`);
     });
   }

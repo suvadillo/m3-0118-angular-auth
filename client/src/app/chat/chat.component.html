@@ -13,11 +13,11 @@
 </div>
 
 <hr>
-<div>
+<!-- <div>
   <label for="">Name for the New Game</label>
     <input type="text" [(ngModel)]="nameGame" />
     <button (click)="getNewGame(nameGame)">Create New Game</button>
-</div>
+</div> -->
 
 <hr>
 
@@ -25,11 +25,11 @@
   <div class="game-board">
     <h2>{{ this.chat.gameSocket.name }} - Created by {{ this.chat.gameSocket.creator.username }}</h2>
     <hr>
-    <div *ngIf="creator">
+    <div *ngIf="this.chat.creator">
       <p>Soy el creador del juego</p>
       <button (click)='this.chat.sendQuestion("started")'>Start Game</button>
     </div>
-    <div *ngIf="!creator">
+    <div *ngIf="!this.chat.creator">
       <p>Game will start soon...</p>
     </div>
     <hr>

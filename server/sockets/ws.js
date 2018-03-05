@@ -3,6 +3,7 @@ const router = express.Router();
 const debug = require("debug")("server:auth");
 const User = require("../models/User");
 const Game = require("../models/Game");
+
 // const Question = require("../models/Question");
 
 module.exports = io => {
