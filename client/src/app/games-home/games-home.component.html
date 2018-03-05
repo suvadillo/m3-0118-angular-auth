@@ -1,0 +1,10 @@
+<div>
+  <div *ngFor='let game of games'>
+    <h2>{{ game.name }}</h2>
+    <p>Created by <b>{{ game.creator.username }}</b></p>
+    <p>Game Status: {{ game.status }}</p>
+    <div *ngIf='game.status === "ready"'>
+      <button (click)='joinGame(game._id)'>Join this Game</button>
+    </div>
+  </div>
+</div>

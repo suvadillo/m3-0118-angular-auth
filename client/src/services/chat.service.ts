@@ -4,6 +4,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Message, Game, User } from '../app/interfaces';
 import { SessionService } from './session.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ChatService {
@@ -25,7 +26,7 @@ export class ChatService {
   public gameFinished: boolean;
   public gameRanking: Array<any>;
 
-  constructor(private http: Http, public session: SessionService) {
+  constructor(private http: Http, public session: SessionService, public router: Router) {
     // this.user = this.session.getUser();
     this.gameFinished = false;
     this.socket = io(`${this.BASE_URL}`);
@@ -95,6 +96,18 @@ export class ChatService {
     });
   }
 
+  joinGame(gameId, player) {
+    // this.socket.emit('join-game', {
+    //   game: gameId,
+    //   player: player
+    // });
+    this.socket.emit('get-game', {
+      status: 'Game sent',
+      gameId: gameId
+    });
+    this.router.navigate(['/chat']);
+  }
+
   // sending message to socket-back to trigger questions
   sendQuestion(gameStatus: string) {
     this.socket.emit('send-question', {
@@ -129,6 +142,11 @@ export class ChatService {
   drawRanking() {
     this.gameRanking = this.gameSocket.ranking;
     this.gameRanking.sort((a, b) => (a.score <= b.score) ? 1 : ((b.score < a.score) ? -1 : 0));
+  }
+
+  getGames() {
+    return this.http.get(`${this.BASE_URL}/api/game`, this.options)
+      .map((res) => res.json());
   }
 
 }

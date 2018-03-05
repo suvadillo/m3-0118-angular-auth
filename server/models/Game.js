@@ -6,7 +6,7 @@ const gameSchema = new Schema({
   questions: [{ type: Schema.Types.ObjectId, ref: 'Question' }],
   timeToAnswer: {type: Number, default: 15000},
   timeToStart: {type: Number, default: 60000},
-  status: {type: String, enum: ['ready', 'started', 'finished']},
+  status: {type: String, enum: ['ready', 'started', 'finished'], default: 'ready'},
   creator: { type: Schema.Types.ObjectId, ref: 'User' },
   players: [{ type: Schema.Types.ObjectId, ref: 'User' }],  
   ranking: [{

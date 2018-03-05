@@ -6,6 +6,22 @@ const Game = require("../models/Game");
 const Question = require("../models/Question");
 const TYPES = require("../models/questions_types");
 
+router.get('/', (req, res, next) => {
+  Game
+    .find({})
+    .populate('creator')
+    .populate('players')
+    .populate('questions')
+    .exec( (err, games) => {
+      if (err) { return res.status(500).json(err); }
+
+      return res.status(200).json(games);
+    });
+});
+
+
+
+
 router.post("/newGame", (req, res, next) => {
   var x = [];
   var gameQuestionsId = [];

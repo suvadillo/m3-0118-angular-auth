@@ -10,6 +10,7 @@ import { ChatComponent } from './chat/chat.component';
 import { RouterModule } from '@angular/router';
 import { routes } from './routes';
 import { GameComponent } from './game/game.component';
+import { GamesHomeComponent } from './games-home/games-home.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { GameComponent } from './game/game.component';
     AppComponent,
     LoginFormComponent,
     ChatComponent,
-    GameComponent
+    GameComponent,
+    GamesHomeComponent
   ],
   imports: [
     BrowserModule,
