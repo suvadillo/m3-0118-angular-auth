@@ -18,7 +18,7 @@ export class ChatComponent implements OnInit {
   // record: Array<any> = [];
   // statusOption: string;
 
-  constructor(public chat: ChatService, public session: SessionService, public router: Router) { 
+  constructor(public chat: ChatService, public session: SessionService, public router: Router) {
     this.user = this.session.getUser();
     this.session.getUserEvent()
       .subscribe(user => this.user = user);

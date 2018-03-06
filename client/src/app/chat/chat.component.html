@@ -39,7 +39,9 @@
 <div *ngIf=this.chat.currentQuestion>
   <div class="game-started">
     <div class="question">
-      <h2>{{ this.chat.currentQuestion.question }}</h2>        
+      <h2>{{ this.chat.currentQuestion.question }}</h2>
+      <h3><b>CATEGORY: </b>{{ this.chat.currentQuestion.category }}</h3> 
+      <img src="{{ this.chat.currentQuestion.imgUrl }}" alt="">      
     </div>
     <div class="answers">
         <button [ngClass]="this.chat.statusOption" *ngFor="let item of this.chat.currentQuestion.options; let i = index" (click)="recordAnswer(i, this.chat.currentQuestion.correctOption)">{{ item }}</button>
