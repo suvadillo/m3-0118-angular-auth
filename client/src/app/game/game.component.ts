@@ -11,12 +11,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class GameComponent implements OnInit {
   gameSocket: object;
+  user: User;
 
   constructor(public chat: ChatService,
     public session: SessionService,
     private router: Router,
     private route: ActivatedRoute) {
+
       this.route.params.subscribe( params => this.getGameData(params['id']));
+      this.user = this.session.getUser();
+      this.session.getUserEvent()
+        .subscribe(user => this.user = user);
+
     }
 
   ngOnInit() {

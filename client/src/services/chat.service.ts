@@ -26,11 +26,12 @@ export class ChatService {
   public gameFinished: boolean;
   public gameRanking: Array<any>;
   public creator:boolean = false;
+  public allGames: Array<Game>;
 
   constructor(private http: Http, public session: SessionService, public router: Router) {
-    this.session.userReady.subscribe( u => {
-      return this.user = u;
-    });
+    this.user = this.session.getUser();
+    this.session.getUserEvent()
+      .subscribe(user => this.user = user);
     this.gameFinished = false;
     this.socket = io(`${this.BASE_URL}`);
     this.socket.on('connect', () => console.log('Connected to WS'));

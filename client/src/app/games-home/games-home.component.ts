@@ -12,25 +12,24 @@ import { Router } from '@angular/router';
 export class GamesHomeComponent implements OnInit {
   games: Array<Game>;
   user: User;
-  admin: boolean;
+  admin: string = 'goiko';
   // game: Game;
 
   constructor(public chat: ChatService, public session: SessionService, public router: Router) {
+    this.user = this.session.getUser();
+    this.session.getUserEvent()
+      .subscribe(user => {
+        this.user = user;
+      });
   }
 
   ngOnInit() {
     this.getGames();
-    this.session.userReady.subscribe( u => {
-      this.user = u;
-      if (u.username === 'goiko') {
-        this.admin = true;
-      }
-      return this.user = u;
-    });
   }
 
   getGames() {
     this.chat.getGames().subscribe( games => {
+      // this.chat.allGames = games;
       this.games = games;
       console.log(this.games);
     });

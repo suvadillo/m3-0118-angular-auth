@@ -17,20 +17,26 @@ export class SessionService {
 
   private user: User;
 
-  @Output() userReady: EventEmitter<any> = new EventEmitter();
+  private userEvent: EventEmitter<any> = new EventEmitter();
 
   getUser() {
     return this.user;
   }
+
+  getUserEvent() {
+    return this.userEvent;
+  }
+
   private configureUser(set = false) {
     return (user) => {
       if (set) {
         this.user = user;
-        this.userReady.emit(this.user);
+        this.userEvent.emit(user);
         console.log(`Setting user, welcome ${this.user.username}`);
       } else {
         console.log(`bye bye ${this.user.username}`);
         this.user = null;
+        this.userEvent.emit(null);
       }
       return user;
     };

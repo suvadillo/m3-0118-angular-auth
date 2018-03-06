@@ -10,13 +10,13 @@
 </div>
 <hr>
 
-<div *ngIf='admin'>
-    <label for="">Name for the New Game</label>
-    <input type="text" [(ngModel)]="nameGame" />
-    <hr>
-    <label for="">Number of questions per category</label>
-    <input type="number" [(ngModel)]="numberQuestionsCat" />
-    <button (click)="getNewGame(nameGame, numberQuestionsCat)">Create New Game</button>
-  </div>
-  
+<div *ngIf='user.username === admin'>
+  <label for="">Name for the New Game</label>
+  <input type="text" [(ngModel)]="nameGame" />
   <hr>
+  <label for="">Number of questions per category</label>
+  <input type="number" [(ngModel)]="numberQuestionsCat" />
+  <button (click)="getNewGame(nameGame, numberQuestionsCat)">Create New Game</button>
+</div>
+  
+<hr>
