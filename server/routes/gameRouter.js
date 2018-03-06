@@ -19,9 +19,6 @@ router.get('/', (req, res, next) => {
     });
 });
 
-
-
-
 router.post("/newGame", (req, res, next) => {
   var x = [];
   var gameQuestionsId = [];

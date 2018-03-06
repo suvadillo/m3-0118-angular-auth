@@ -5,11 +5,13 @@ import 'rxjs/add/operator/map';
 import { Message, Game, User } from '../app/interfaces';
 import { SessionService } from './session.service';
 import { Router } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class ChatService {
+  BASE_URL: string = environment.BASE_URL;
 
-  BASE_URL = 'http://localhost:3000';
+  // const BASE_URL = 'http://localhost:3000';
   options: object = {withCredentials: true};
   public messages: Array<Message> = [];
   public notifications: Array<Notification> = [];

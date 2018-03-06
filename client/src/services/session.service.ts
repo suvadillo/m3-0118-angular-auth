@@ -4,12 +4,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';
 import { User } from '../app/interfaces';
+import { environment } from '../environments/environment';
 
 
 @Injectable()
 export class SessionService {
+  BASEURL: string = environment.BASE_URL;
 
-  BASEURL: string = 'http://localhost:3000';
+  // BASEURL: string = 'http://localhost:3000';
   options: object = {withCredentials: true};
   constructor(private http: Http) {
     this.isLoggedIn().subscribe();
