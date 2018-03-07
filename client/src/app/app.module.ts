@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { routes } from './routes';
 import { GameComponent } from './game/game.component';
 import { GamesHomeComponent } from './games-home/games-home.component';
+import { FacebookModule } from 'ngx-facebook';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { GamesHomeComponent } from './games-home/games-home.component';
     BrowserModule,
     HttpModule,
     FormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    FacebookModule.forRoot()
   ],
   providers: [SessionService, ChatService],
   bootstrap: [AppComponent]

@@ -37,6 +37,29 @@ router.post('/signup', (req, res, next) => {
     }) 
 });
 
+router.post('/loginFb', (req, res, next) => {
+  const {username, imgUrl, userFbId} = req.body;
+  if (!username) return res.status(400).json({ message: 'Provide username' })
+  User.findOne({ username }, '_id')
+    .then(foundUser =>{
+      const theUser = new User({
+        username,
+        userFbId,
+        imgUrl
+      });
+      return theUser.save()
+          .then(user => loginPromise(req,user))
+          .then(user => {
+            debug(`Registered user ${user._id}. Welcome ${user.username}`);
+            res.status(200).json(req.user)
+          }) 
+    })
+    .catch(e => {
+      console.log(e);
+      res.status(500).json(e)
+    }) 
+});
+
 
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, theUser, failureDetails) => {

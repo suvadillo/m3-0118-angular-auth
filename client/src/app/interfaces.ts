@@ -2,6 +2,8 @@ export interface User {
   username: string;
   password: string;
   _id: number;
+  imgUrl: string;
+  userFb: boolean;
 }
 
 export interface Message {
