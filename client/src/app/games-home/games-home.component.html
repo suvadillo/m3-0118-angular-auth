@@ -1,22 +1,40 @@
-<div>
-  <div *ngFor='let game of games'>
-    <h2>{{ game.name }}</h2>
-    <p>Created by <b>{{ game.creator.username }}</b></p>
-    <p>Game Status: {{ game.status }}</p>
-    <div *ngIf='game.status === "ready"'>
-      <button (click)='joinGame(game._id)'>Join this Game</button>
-    </div>
-  </div>
-</div>
-<hr>
+<div class="site-wrapper">
 
-<div *ngIf='user.username === admin'>
-  <label for="">Name for the New Game</label>
-  <input type="text" [(ngModel)]="nameGame" />
-  <hr>
-  <label for="">Number of questions per category</label>
-  <input type="number" [(ngModel)]="numberQuestionsCat" />
-  <button (click)="getNewGame(nameGame, numberQuestionsCat)">Create New Game</button>
-</div>
+  <div class="row">
+      <div class="col-md-6 center">
+        <div class="row games-board">
+        <h2>Public Games</h2>
+            <div *ngFor='let game of games' class="game-item">
+              <div class="cover-img">
+                <h3 class="item-game">{{ game.name }}</h3>
+                <p>Created by <b>{{ game.creator.username }}</b></p>
+                <p>Game Status: {{ game.status }}</p>
+                <div *ngIf='game.status === "ready"'>
+                  <button (click)='joinGame(game._id)' class="btn btn-lg btn-warning btn-lng">Join this Game</button>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+      <div class="col-md-6 center">
+        <div class="row game-form">
+          <h2>CREATE A NEW GAME</h2>
+          <div *ngIf='user.username === admin'>
+              <label for="">Name for the New Game</label>
+              <input class="form-control" type="text" [(ngModel)]="nameGame" />
+              <br>
+
+              <label for="">Number of questions per category</label>
+              <input class="form-control" type="number" min="1" max="5" [(ngModel)]="numberQuestionsCat" />
+              <br>
+              <button (click)="getNewGame(nameGame, numberQuestionsCat)" class="btn btn-lg btn-success btn-lng">Create New Game</button>
+            </div>
+          </div>
+      </div>
+
   
-<hr>
+
+
+
+
+</div>

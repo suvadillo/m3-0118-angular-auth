@@ -1,0 +1,88 @@
+html,
+body {
+  height: 100%;
+  background-color: #fff;
+}
+body {
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+}
+
+.site-wrapper {
+  background-image: url('../../../public/images/trivial-world.jpg');
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #333;
+}
+
+.site-wrapper-inner {
+  display: table-cell;
+  vertical-align: top;
+}
+
+.inner {
+  padding: 30px;
+}
+
+.cover {
+  padding: 0 20px;
+}
+.cover .btn-lg {
+  padding: 10px 20px;
+  font-weight: bold;
+}
+.center {
+  text-align: center;
+}
+.games-board {
+  width: 80%;
+  margin: 0 auto;  
+  padding: 50px;
+}
+.games-board h2 {
+  text-transform: uppercase;
+  font-size: 40px;
+  color: white;
+}
+.cover-img {
+  opacity: 1;
+  background-image: url('../../../public/images/board-game.png');
+  background-size: cover;  
+  padding: 50px;
+  width: 434px;
+  height: 292px;
+}
+.game-item {
+  background-color: white;
+  padding: 30px;
+  border: black 2px;
+}
+h3.item-game {
+  font-size: 30px;
+  font-weight: bold;
+  color: red;
+}
+.game-form {
+  padding-top: 50px;
+}
+.game-form .form-control {
+  width: 50%;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  /* Pull out the header and footer */
+  .masthead {
+    position: fixed;
+    top: 0;
+  }
+  /* Start the vertical centering */
+  .site-wrapper-inner {
+    vertical-align: middle;
+  }
+
+}
