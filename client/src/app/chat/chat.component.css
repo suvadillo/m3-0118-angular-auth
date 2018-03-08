@@ -76,6 +76,7 @@ body {
   width: 100%;
   min-height: 100vh;
   background-color: #333;
+  overflow: hidden;
 }
 .game-board {
   color: white;

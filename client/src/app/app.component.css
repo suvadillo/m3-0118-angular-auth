@@ -1,0 +1,126 @@
+html,
+body {
+  height: 100%;
+  background-color: #fff;
+}
+body {
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+}
+
+.error{
+    background-color:red;
+    color: white;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.site-wrapper {
+    background-image: url('../../public/images/trivial-world.jpg');
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #333;
+    overflow: hidden;
+}
+.navbar-black {
+    background-color: #222;
+    border-color: #080808;
+    color: #fff;
+}
+.navbar-black button{
+    color: #fff;
+}
+
+.btn-link:focus, .btn-link:hover{
+    text-decoration: none;
+}
+.glyphicon:before {
+    margin-right: 10px;
+}
+
+.modal-content{
+    background-color: #f0ad4e;
+    opacity:0.9;
+}
+.modal-title {
+    color: white;
+}
+.modal-footer {
+    border-top: none;
+}
+.modal-dialog {
+    margin: 60px auto;
+}
+
+.cover-container {
+    background-color: ghostwhite;
+    padding: 10px 50px 50px 50px;
+    opacity: 0.8;
+    margin-top: 100px;
+    border-radius: 10px;
+}
+.center {
+    text-align: center;
+}
+img.facebook {
+    margin-right: 20px;
+}
+
+
+
+
+
+a,
+a:focus,
+a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.site-wrapper-inner {
+  display: table-cell;
+  vertical-align: top;
+}
+
+.inner {
+  padding: 30px;
+}
+
+
+/*
+ * Cover
+ */
+
+.cover {
+  padding: 0 20px;
+}
+.cover .btn-lg {
+  padding: 10px 20px;
+  font-weight: bold;
+}
+
+/*
+ * Affix and center
+ */
+
+@media (min-width: 768px) {
+  /* Pull out the header and footer */
+  .masthead {
+    position: fixed;
+    top: 0;
+  }
+  /* Start the vertical centering */
+  .site-wrapper-inner {
+    vertical-align: middle;
+  }
+
+}

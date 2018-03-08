@@ -1,25 +1,24 @@
-<div class="site-wrapper">
-  <div class="row">
-    <div class="col-md-6 center left-game">
-      <div class="col-md-2"></div>
-      <div class="col-md-10 center">
+<div class="row">
+  <div class="col-md-6 center left-game">
+    <div class="col-md-2"></div>
+    <div class="col-md-10 center">
 
-        <div *ngIf="this.chat.gameSocket">
-          <div class="game-board">
-            <h3>{{ this.chat.gameSocket.name }} - Created by {{ this.chat.gameSocket.creator.username }}</h3>
-            <div *ngIf='this.chat.gameFinished'>
-              <h2>Game Over</h2>
+      <div *ngIf="this.chat.gameSocket">
+        <div class="game-board">
+          <h3>{{ this.chat.gameSocket.name }} - Created by {{ this.chat.gameSocket.creator.username }}</h3>
+          <div *ngIf='this.chat.gameFinished'>
+            <h2>Game Over</h2>
+          </div>
+          <div *ngIf='!this.chat.gameFinished'>
+            <div *ngIf="this.chat.creator">
+              <p>Soy el creador del juego</p>
+              <button (click)='this.chat.sendQuestion("started")' class="btn btn-lg btn-success btn-lng">Start Game</button>
             </div>
-            <div *ngIf='!this.chat.gameFinished'>
-              <div *ngIf="this.chat.creator">
-                <p>Soy el creador del juego</p>
-                <button (click)='this.chat.sendQuestion("started")' class="btn btn-lg btn-success btn-lng">Start Game</button>
-              </div>
-              <div *ngIf="!this.chat.creator">
-                <h4>Game will start soon...</h4>
-              </div>
-              <br>
-              <div *ngIf="!this.chat.gameStarted">
+            <div *ngIf="!this.chat.creator">
+              <h4>Game will start soon...</h4>
+            </div>
+            <br>
+            <div *ngIf="!this.chat.gameStarted">
 
               <div class="game-card">
                 <div class="game-over">
@@ -125,5 +124,4 @@
       </div>
     </div>
   </div>
-</div>
 </div>
