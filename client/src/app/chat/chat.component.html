@@ -1,60 +1,102 @@
-<div class="chat">
-  <div class="conversations">
-    <div class="mensaje" *ngFor="let m of chat.messages">
-      <div [ngClass]="m.type">
-          <div class="text">{{m.message}}</div>
+<div class="site-wrapper">
+  <div class="row">
+    <div class="col-md-6 center left-game">
+      <div class="col-md-2"></div>
+      <div class="col-md-10 center">
+
+        <div *ngIf="this.chat.gameSocket">
+          <div class="game-board">
+            <h3>{{ this.chat.gameSocket.name }} - Created by {{ this.chat.gameSocket.creator.username }}</h3>
+            <div *ngIf='this.chat.gameFinished'><h2>Game Over</h2></div>
+            <div *ngIf='!this.chat.gameFinished'>
+            <div *ngIf="this.chat.creator">
+              <p>Soy el creador del juego</p>
+              <button (click)='this.chat.sendQuestion("started")' class="btn btn-lg btn-success btn-lng">Start Game</button>
+            </div>
+            <div *ngIf="!this.chat.creator">
+              <h4>Game will start soon...</h4>
+            </div>
+          </div>
+            <br>
+          </div>
+        </div>
+
+        <div *ngIf=this.chat.currentQuestion>
+
+          <div class="game-card">
+            <div class="game-started">
+              <div class="col-md-4 center category">
+                <h3>CATEGORY:</h3>
+                <h3>
+                  <span>{{ this.chat.currentQuestion.category }}</span>
+                </h3>
+                <img src="{{ this.chat.currentQuestion.imgUrl }}" alt="">
+              </div>
+              <div class="col-md-8 center">
+                <div class="question">
+                  <h2>{{ this.chat.currentQuestion.question }}</h2>
+                  <div class="answers">
+                    <button [ngClass]="this.chat.statusOption" *ngFor="let item of this.chat.currentQuestion.options; let i = index" (click)="recordAnswer(i, this.chat.currentQuestion.correctOption)"
+                      class="btn-lng">{{ item }}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf='this.chat.gameFinished'>
+          <div class="game-card">
+            <div class="game-over">
+              <div class="game-ranking">
+                
+                <h3>RANKING</h3>
+
+
+
+                <!-- <div class="ranking-item" *ngFor="let item of this.chat.gameRanking; let i = index">
+                  <p>
+                    <b>{{i + 1}} - {{ item.user }}</b>
+                  </p>
+                  <p>{{ item.score }}</p>
+                </div> -->
+
+                <table class="ranking-item">
+                    <tr>
+                        <th>POSITION</th>
+                        <th>USER</th> 
+                        <th>SCORE</th>
+                      </tr>
+                      <tr *ngFor="let item of this.chat.gameRanking; let i = index">
+                          <td><span>{{i + 1}}</span></td>
+                          <td>{{ item.user }}</td>
+                          <td>{{ item.score }}</td>
+                      </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 center">
+      <h4 class="chat">Chat with your opponents!</h4>
+      <div class="chat">
+        <div class="conversations">
+          <div class="mensaje" *ngFor="let m of chat.messages">
+            <div [ngClass]="m.type">
+              <div class="text">{{m.message}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="sender">
+          <input type="text" [(ngModel)]="msgToSend" />
+          <button (click)="sendMessage()" class="btn-warning">Enviar</button>
+        </div>
       </div>
     </div>
   </div>
-  <div class="sender">
-    <input type="text" [(ngModel)]="msgToSend" />
-    <button (click)="sendMessage()">Enviar</button>
-  </div>
-</div>
-
-<hr>
-<!-- <div>
-  <label for="">Name for the New Game</label>
-    <input type="text" [(ngModel)]="nameGame" />
-    <button (click)="getNewGame(nameGame)">Create New Game</button>
-</div> -->
-
-<hr>
-
-<div *ngIf="this.chat.gameSocket">
-  <div class="game-board">
-    <h2>{{ this.chat.gameSocket.name }} - Created by {{ this.chat.gameSocket.creator.username }}</h2>
-    <hr>
-    <div *ngIf="this.chat.creator">
-      <p>Soy el creador del juego</p>
-      <button (click)='this.chat.sendQuestion("started")'>Start Game</button>
-    </div>
-    <div *ngIf="!this.chat.creator">
-      <p>Game will start soon...</p>
-    </div>
-    <hr>
-  </div>
-</div>
-
-<div *ngIf=this.chat.currentQuestion>
-  <div class="game-started">
-    <div class="question">
-      <h2>{{ this.chat.currentQuestion.question }}</h2>
-      <h3><b>CATEGORY: </b>{{ this.chat.currentQuestion.category }}</h3> 
-      <img src="{{ this.chat.currentQuestion.imgUrl }}" alt="">      
-    </div>
-    <div class="answers">
-        <button [ngClass]="this.chat.statusOption" *ngFor="let item of this.chat.currentQuestion.options; let i = index" (click)="recordAnswer(i, this.chat.currentQuestion.correctOption)">{{ item }}</button>
-    </div>
-  </div>
-</div>
-<div *ngIf='this.chat.gameFinished'>
-    <div class="game-ranking">
-      <h2>The game {{ this.chat.gameSocket.name }} is finished</h2>  
-      <h3>Here is the ranking:</h3>
-      <div class="ranking-item" *ngFor="let item of this.chat.gameRanking; let i = index">
-        <p><b>{{i + 1}} - {{ item.user }}</b></p>
-        <p>{{ item.score }}</p>     
-      </div>
-    </div>
 </div>

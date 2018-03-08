@@ -1,5 +1,4 @@
 <div class="site-wrapper">
-
   <div class="row">
       <div class="col-md-6 center">
         <div class="row games-board">
@@ -17,9 +16,9 @@
       </div>
     </div>
       <div class="col-md-6 center">
-        <div class="row game-form">
-          <h2>CREATE A NEW GAME</h2>
+        <div class="row game-form">          
           <div *ngIf='user.username === admin'>
+              <h2>CREATE A NEW GAME</h2>
               <label for="">Name for the New Game</label>
               <input class="form-control" type="text" [(ngModel)]="nameGame" />
               <br>

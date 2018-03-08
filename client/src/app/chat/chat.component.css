@@ -6,6 +6,10 @@
 .conversations{
   border: 1px solid black;
   padding: 20px;
+  background-color: white;
+  max-height: 550px;
+  height: 300px;
+  overflow-y: scroll;
 }
 .sender{
   display: flex;
@@ -17,7 +21,11 @@ input{
 button{
   width: 20%;
 }
-
+h4.chat {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+}
 
 .mensaje{
   color: black;
@@ -46,4 +54,121 @@ button{
 
 .selected{
   background-color: lightpink;
+}
+
+
+html,
+body {
+  height: 100%;
+  background-color: #fff;
+}
+body {
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+}
+
+.site-wrapper {
+  background-image: url('../../../public/images/trivial-world.jpg');
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #333;
+}
+.game-board {
+  color: white;
+}
+
+.game-board h2 {
+  font-size: 30px;
+}
+.game-board h2 span {
+  text-transform: uppercase;
+}
+
+.center {
+  text-align: center;
+}
+.col-md-6 {
+  padding-top: 50px;
+}
+.game-card {
+  margin: 0 auto;
+  background-color: #345c7d;
+  border: 2px white;
+  padding: 20px;
+}
+.game-started {
+  margin: 0 auto;
+  background-color: orange;
+  height: 440px;
+}
+.game-over {
+  margin: 0 auto;
+  background-color: orange;
+  height: 440px;
+  padding: 20px;
+}
+.ranking-item {
+  width: 90%;
+  margin: 0 auto;
+  font-size: 16px;
+  text-align: center;
+}
+.ranking-item td span{
+  font-size: 24px;
+  font-weight: bold;
+  color: orangered;
+}
+.ranking-item td, .ranking-item th{
+  text-align: center;
+}
+.ranking-item td:first-child, .ranking-item th:first-child{
+  width: 20%;
+}
+
+.left-game {
+  margin: 0 auto;
+}
+.question {
+  background-color: beige;
+  height: 400px;
+}
+.game-ranking {
+  background-color: beige;
+  padding: 5px;
+  min-height: 400px;
+  overflow-y: scroll;
+}
+.question h2 {
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 24px;
+}
+.category {
+  text-align: center;
+  color: #345c7d;
+  padding-top: 20px;
+  height: 400px;
+}
+.category span {
+  font-size: 24px;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
+}
+.answers button {
+  display: block;
+  width: 80%;
+  height: 50px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.game-ranking h3 {
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
+  font-size: 24px;
+  color: #345c7d;
 }
