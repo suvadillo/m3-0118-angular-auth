@@ -1,12 +1,12 @@
 .chat{
   padding: 20px;
-  width: 400px;
+  width: 500px;
   margin: 0 auto;
 }
 .conversations{
-  border: 1px solid black;
+  border: 1px solid orange;
   padding: 20px;
-  background-color: white;
+  background-color: beige;
   max-height: 550px;
   height: 300px;
   overflow-y: scroll;
@@ -53,9 +53,21 @@ h4.chat {
 }
 
 .selected{
-  background-color: lightpink;
+  background-color: rgb(192, 189, 189);
+  color: dimgrey;
 }
-
+.no-correct-answer {
+  margin: 0 auto;
+  width: 80%;
+  min-height: 10px;
+  background-color: beige;
+}
+.correct-answer {
+  margin: 0 auto;
+  width: 80%;
+  min-height: 10px;
+  background-color: #5cb85c;
+}
 
 html,
 body {

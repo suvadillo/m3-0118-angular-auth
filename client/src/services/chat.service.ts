@@ -30,6 +30,7 @@ export class ChatService {
   public creator:boolean = false;
   public allGames: Array<Game>;
   public gameStarted: boolean = false;
+  public classCorrect: string;
 
   constructor(private http: Http, public session: SessionService, public router: Router) {
     this.user = this.session.getUser();
@@ -86,10 +87,16 @@ export class ChatService {
           if (this.userAnswers.length < counter) { this.userAnswers.push('x'); }
           this.currentQuestion = this.gameSocket.questions[counter];
           this.statusOption = 'unselected';
+          this.classCorrect = 'no-correct-answer';
           counter++;
-        }, 500);
+        }, 750);
+        this.showCorrect();
       }
-    } , 5000);
+    } , 7500);
+  }
+  showCorrect() {
+    this.classCorrect = 'correct-answer';
+    this.statusOption = 'selected';
   }
 
   sendMessage(m: string) {

@@ -2,7 +2,6 @@
   <div class="col-md-6 center left-game">
     <div class="col-md-2"></div>
     <div class="col-md-10 center">
-
       <div *ngIf="this.chat.gameSocket">
         <div class="game-board">
           <h3>{{ this.chat.gameSocket.name }} - Created by {{ this.chat.gameSocket.creator.username }}</h3>
@@ -19,12 +18,9 @@
             </div>
             <br>
             <div *ngIf="!this.chat.gameStarted">
-
               <div class="game-card">
                 <div class="game-over">
                   <div class="game-players">
-
-
                     <div class="players">
                       <h4>PLAYERS JOINING THIS GAME:</h4>
                       <ul *ngFor="let item of this.chat.gameSocket.players">
@@ -33,20 +29,16 @@
                         </li>
                       </ul>
                     </div>
-
                   </div>
                 </div>
               </div>
             </div>
-
-
           </div>
           <br>
         </div>
       </div>
 
       <div *ngIf=this.chat.currentQuestion>
-
         <div class="game-card">
           <div class="game-started">
             <div class="col-md-4 center category">
@@ -60,8 +52,20 @@
               <div class="question">
                 <h2>{{ this.chat.currentQuestion.question }}</h2>
                 <div class="answers">
-                  <button [ngClass]="this.chat.statusOption" *ngFor="let item of this.chat.currentQuestion.options; let i = index" (click)="recordAnswer(i, this.chat.currentQuestion.correctOption)"
-                    class="btn-lng">{{ item }}</button>
+
+
+                  <div *ngFor="let item of this.chat.currentQuestion.options; let i = index">
+                  <button [ngClass]="this.chat.statusOption"(click)="recordAnswer(i, this.chat.currentQuestion.correctOption)"
+                    class="btn-lng" id="option{{i}}">{{ item }}</button>
+                    <div *ngIf="(i===this.chat.currentQuestion.correctOption)" class="{{this.chat.classCorrect}}"></div>
+                    <div *ngIf="!(i===this.chat.currentQuestion.correctOption)" class="no-correct-answer"></div>
+                  </div>
+
+                  <!-- <button [ngClass]="this.chat.statusOption" *ngFor="let item of this.chat.currentQuestion.options; let i = index" (click)="recordAnswer(i, this.chat.currentQuestion.correctOption)"
+                    class="btn-lng" id="option{{i}}">{{ item }}</button> -->
+
+
+
                 </div>
               </div>
             </div>
@@ -72,18 +76,7 @@
         <div class="game-card">
           <div class="game-over">
             <div class="game-ranking">
-
               <h3>RANKING</h3>
-
-
-
-              <!-- <div class="ranking-item" *ngFor="let item of this.chat.gameRanking; let i = index">
-                  <p>
-                    <b>{{i + 1}} - {{ item.user }}</b>
-                  </p>
-                  <p>{{ item.score }}</p>
-                </div> -->
-
               <table class="ranking-item">
                 <tr>
                   <th>POSITION</th>
@@ -101,9 +94,6 @@
             </div>
           </div>
         </div>
-
-
-
       </div>
     </div>
   </div>

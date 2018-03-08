@@ -32,8 +32,8 @@ body {
     overflow: hidden;
 }
 .navbar-black {
-    background-color: #222;
-    border-color: #080808;
+    background-color: rebeccapurple;
+    border-color: mediumpurple;
     color: #fff;
 }
 .navbar-black button{
