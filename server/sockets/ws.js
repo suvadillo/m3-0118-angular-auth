@@ -36,5 +36,10 @@ module.exports = io => {
     socket.on("end-game", data => {
       io.emit("ranking-game", data);
     });
+
+    // refresh all games
+    socket.on("request-all-games", data => {
+      io.emit("info-all-games", data);
+    });
   });
 };

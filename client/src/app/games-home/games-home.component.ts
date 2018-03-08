@@ -29,8 +29,8 @@ export class GamesHomeComponent implements OnInit {
 
   getGames() {
     this.chat.getGames().subscribe( games => {
-      // this.chat.allGames = games;
-      this.games = games;
+      this.chat.allGames = games;
+      // this.games = games;
       console.log(this.games);
     });
   }
@@ -38,6 +38,9 @@ export class GamesHomeComponent implements OnInit {
   joinGame(gameId) {
     this.user = this.session.getUser();
     this.chat.joinGame(gameId, this.user);
+    // this.chat.getAllGames();
+    console.log('this.user en games-home.component:');
+    console.log(this.user);
   }
 
   getNewGame(n, num) {
@@ -54,6 +57,7 @@ export class GamesHomeComponent implements OnInit {
         if (this.chat.gameSocket.creator._id === this.user._id) {
           this.chat.creator = true;
         }
+        this.chat.getAllGames();
       }, 500);
       this.getGames();
       this.router.navigate(['/chat']);

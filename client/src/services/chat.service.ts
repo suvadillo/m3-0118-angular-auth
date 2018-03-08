@@ -29,6 +29,7 @@ export class ChatService {
   public gameRanking: Array<any>;
   public creator:boolean = false;
   public allGames: Array<Game>;
+  public gameStarted: boolean = false;
 
   constructor(private http: Http, public session: SessionService, public router: Router) {
     this.user = this.session.getUser();
@@ -46,9 +47,12 @@ export class ChatService {
     });
     this.socket.on('sending-game', game => {
       this.gameSocket = game;
+      console.log('this.gameSocket recibido del back en chat.service:');
+      console.log(this.gameSocket);
     });
     // receiving socket-back message to trigger questions
     this.socket.on('resend-question', gameStatus => {
+      this.gameStarted = true;
       this.gameSocket.status = gameStatus.status;
       console.log(this.gameSocket.status);
       this.userRecord = 0;
@@ -57,10 +61,15 @@ export class ChatService {
 
     this.socket.on('ranking-game', data => {
       this.gameSocket = data.gameData;
-      this.drawRanking();
+      this.drawRanking(data.gameData);
       this.note = data.status;
       this.currentQuestion = '';
       this.gameFinished = true;
+    });
+    this.socket.on('info-all-games', data => {
+      this.allGames = data.allGames;
+      console.log('socket de llegada:')
+      console.log(this.allGames);
     });
   }
 
@@ -139,6 +148,8 @@ export class ChatService {
     console.log('username in getRankingGame:');
     console.log(username);
     this.updateFinishedGame(this.gameSocket._id, username, this.userRecord).subscribe( game => {
+      console.log('game updated in DDBB de vuelta en el service')
+      console.log(game);
       this.socket.emit('end-game', {
         status: 'Game finished',
         gameData: game
@@ -152,13 +163,25 @@ export class ChatService {
   }
 
   updateFinishedGame(gameId, user, userScore) {
+    console.log("HOLIIIII")
     return this.http.post(`${this.BASE_URL}/api/game/${gameId}`, {user, userScore}, this.options)
       .map((res) => res.json());
   }
 
-  drawRanking() {
-    this.gameRanking = this.gameSocket.ranking;
+  drawRanking(gameData) {
+    this.gameRanking = gameData.ranking;
     this.gameRanking.sort((a, b) => (a.score <= b.score) ? 1 : ((b.score < a.score) ? -1 : 0));
+  }
+
+  getAllGames() {
+    this.getGames().subscribe( games => {
+      this.allGames = games;
+      console.log(this.allGames);
+      this.socket.emit('request-all-games', {
+        status: 'New Game Created',
+        allGames: games
+      });
+    });
   }
 
   getGames() {

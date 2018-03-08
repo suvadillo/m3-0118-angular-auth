@@ -3,7 +3,7 @@
       <div class="col-md-6 center">
         <div class="row games-board">
         <h2>Public Games</h2>
-            <div *ngFor='let game of games' class="game-item">
+            <div *ngFor='let game of this.chat.allGames' class="game-item">
               <div class="cover-img">
                 <h3 class="item-game">{{ game.name }}</h3>
                 <p>Created by <b>{{ game.creator.username }}</b></p>

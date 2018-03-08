@@ -157,7 +157,7 @@ const questions = [
   },
   {
     question: "Which of the following is correct?",
-    options: ["jQuery is a JavaScript Library", "jQuery is a JSON Library"],
+    options: ["jQuery is a JavaScript Library", "jQuery is a JSON Library", "None"],
     correctOption: 0,
     imgUrl: '',
     category: 'jQuery'
@@ -170,7 +170,7 @@ const questions = [
     category: 'jQuery'
   },
   {
-    question: "Is jQuery a library for client scripting or server scripting? or none",
+    question: "Is jQuery a library for client scripting, server scripting or none?",
     options: ["Server scripting", "Client scripting", "None"],
     correctOption: 1,
     imgUrl: '',

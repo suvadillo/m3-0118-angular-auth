@@ -57,27 +57,16 @@ router.post("/newGame", (req, res, next) => {
 });
 
 router.post('/:id', (req,res, next) => {
-  const {user,userScore} = req.body;
-  const newRanking = {user: user, score: userScore};
+  const newRanking = {user: req.body.user, score: req.body.userScore};
 
-  Game.findById(req.params.id)
+  Game.findOneAndUpdate({_id:req.params.id},{ $push: { ranking: newRanking } },{new:true})
     .populate('creator')
     .populate('players')
     .populate('questions')
-    .exec((err, game) => {
-      if (err) { return res.status(500).json(err); }
-      if (!game) { return res.status(404).json(err); }
-
-      game.ranking.push(newRanking);
-      game.status = 'finished';
-
-      game.save( (err) => {
-        if (err) { return res.status(500).json(err); }
-        if (game.errors){ return res.status(400).json(game); }
-
-        return res.status(200).json(game);
-      });
-  });
+    .then(game => {
+      res.json(game)
+    })
+    .catch(err=>res.json(err))
 })
 
 router.put('/:id', (req,res, next) => {
@@ -104,54 +93,5 @@ router.put('/:id', (req,res, next) => {
       });
   });
 })
-
-
-
-
-
-
-
-
-
-
-
-
-// router.post("/quizSuperhero", function(req, res, next) {
-//   const option1 = req.body.Question1;
-//   const option2 = req.body.Question2;
-//   const option3 = req.body.Question3;
-//   const heroe = req.body.heroe;
-//   let id = req.user._id;
-//   if (
-//     option1 == req.body.solution[0] &&
-//     option2 == req.body.solution[1] &&
-//     option3 == req.body.solution[2]
-//   ) {
-//     let id = req.user._id;
-//     User.find({ _id: id })
-//       .then(us => {
-//         var certUser = us[0].certifications;
-//         certUser.push(heroe);
-//         return certUser;
-//       })
-//       .then(cert => {
-//         const update = {
-//           certifications: cert
-//         };
-//         User.findByIdAndUpdate(id, update, { new: true }, (err, usr) => {
-//           if (err) {
-//             return next(err);
-//           }
-//         });
-//       })
-//       .catch(e => next(e));
-//     req.flash("info", "Congratulations! You got a new Certification!");
-//     res.redirect(`/onlyme?id=${id}`);
-//     return;
-//   } else {
-//     req.flash("info", "You didn't pass the quiz. Try again.");
-//     res.redirect(`/quiz/${heroe}`);
-//   }
-// });
 
 module.exports = router;
