@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Question = require('../models/Question');
 
 // mongoose.connect(dbURL).then(() => console.log("Conectado!"));
-mongoose.connect('mongodb://goiko:630919218@ds145223.mlab.com:45223/trivial-coding-game')
+mongoose.connect('mongodb://localhost/trivial-game')
         .then(()=> console.log("Connected to DB"))
         .catch(e => console.error(e));
 
