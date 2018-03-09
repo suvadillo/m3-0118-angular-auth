@@ -38,7 +38,7 @@ export class ChatComponent implements OnInit {
       this.chat.userAnswers.push(i);
       if (i === correctOption) { this.chat.userRecord++; }
     }
-    document.getElementById(`option${i}`).setAttribute('style', 'background-color: lightsalmon');
+    document.getElementById(`option${i}`).setAttribute('style', 'background-color: plum');
     this.chat.statusOption = 'selected';
 
     console.log('i: ' + i + ' / correct: ' + correctOption);
@@ -46,5 +46,9 @@ export class ChatComponent implements OnInit {
     console.log(this.chat.userAnswers);
     console.log('userRecord:');
     console.log(this.chat.userRecord);
+  }
+
+  goHome() {
+    this.router.navigate(['/gameshome']);
   }
 }

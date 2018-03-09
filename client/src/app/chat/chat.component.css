@@ -68,6 +68,17 @@ h4.chat {
   min-height: 10px;
   background-color: #5cb85c;
 }
+.go-home {
+  width: 40%;
+}
+.img-category {
+  margin-top: 180px;
+  width: 80%;
+}
+
+button.start-game {
+  width: 25%;
+}
 
 html,
 body {

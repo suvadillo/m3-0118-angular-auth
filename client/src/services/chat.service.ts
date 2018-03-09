@@ -40,7 +40,6 @@ export class ChatService {
     this.socket = io(`${this.BASE_URL}`);
     this.socket.on('connect', () => console.log('Connected to WS'));
     this.socket.on('chat', m => {
-      console.log('Mensaje recibido');
       this.messages.push({
         message: m.message,
         type: 'other'
@@ -69,8 +68,6 @@ export class ChatService {
     });
     this.socket.on('info-all-games', data => {
       this.allGames = data.allGames;
-      console.log('socket de llegada:')
-      console.log(this.allGames);
     });
   }
 
@@ -119,8 +116,6 @@ export class ChatService {
   }
 
   joinGame(gameId, player) {
-    console.log('player en service');
-    console.log(player);
     this.updateGame(gameId, 0, player._id).subscribe( game => {
       this.gameSocket = game;
       this.socket.emit('get-game', {
@@ -152,11 +147,7 @@ export class ChatService {
   // sending data to socket-back to end the game
   getRankingGame() {
     const username = this.session.getUser().username;
-    console.log('username in getRankingGame:');
-    console.log(username);
     this.updateFinishedGame(this.gameSocket._id, username, this.userRecord).subscribe( game => {
-      console.log('game updated in DDBB de vuelta en el service')
-      console.log(game);
       this.socket.emit('end-game', {
         status: 'Game finished',
         gameData: game
@@ -170,7 +161,6 @@ export class ChatService {
   }
 
   updateFinishedGame(gameId, user, userScore) {
-    console.log("HOLIIIII")
     return this.http.post(`${this.BASE_URL}/api/game/${gameId}`, {user, userScore}, this.options)
       .map((res) => res.json());
   }
