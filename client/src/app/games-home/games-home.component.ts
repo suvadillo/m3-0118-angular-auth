@@ -47,7 +47,7 @@ export class GamesHomeComponent implements OnInit {
     let name = '';
     let numQuesCat = 0;
     n ? name = n : name = 'Trivial-Coding-Game';
-    num ? numQuesCat = num : numQuesCat = 2;
+    num ? numQuesCat = num : numQuesCat = 3;
     // console.log('this.user.chat');
     // console.log(this.chat.user);
     this.chat.getNewGame(name, this.user._id, numQuesCat).subscribe( game => {

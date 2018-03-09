@@ -40,7 +40,6 @@ export class AppComponent implements OnInit {
   logout() {
     this.session.logout()
     .catch(e => this.error = e)
-    .subscribe();
+    .subscribe(() => this.router.navigate(['/']));
   }
-
 }
